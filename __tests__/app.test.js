@@ -31,12 +31,12 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    const task = [{
+    const task = {
       "id": 4,
       "todo": "grocery shopping",
       "completed": false,
       "user_id": 2
-    }];
+    };
 
     const dataBase = {
       ...task,
