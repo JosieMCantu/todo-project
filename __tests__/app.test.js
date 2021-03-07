@@ -31,18 +31,6 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    const task = {
-      "id": 4,
-      "todo": "grocery shopping",
-      "completed": false,
-      "user_id": 2
-    };
-
-    const dataBase = {
-      ...task,
-      id: 4,
-    };
-
     test('POST adds a new todo for a specific user', async () => {
 
       const task = {
@@ -52,21 +40,14 @@ describe('app routes', () => {
         "user_id": 2
       };
 
+      const dataBase = {
+        ...task,
+        id: 4,
+      };
+
       const data = await fakeRequest(app)
         .post('/api/todos')
         .send(task)
-        .set('Authorization', token)
-        .expect('Content-Type', /json/)
-        .expect(200)
-        ;
-
-      expect(data.body).toEqual(dataBase);
-    });
-
-    test('GET returns all todos for a specific user', async () => {
-
-      const data = await fakeRequest(app)
-        .get('/api/todos')
         .set('Authorization', token)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -81,15 +62,39 @@ describe('app routes', () => {
         "completed": true,
       };
 
+      const dataBase = [];
+
       const data = await fakeRequest(app)
         .put('/api/todos/4')
         .send(updatedTask)
         .set('Authorization', token)
         .expect('Content-Type', /json/)
-        .expect(200)
-        ;
+        .expect(200);
 
-      expect(data.body).toEqual({ ...dataBase, completed: true });
+      expect(data.body).toEqual(dataBase);
+    });
+
+    test('GET returns all todos for a specific user', async () => {
+
+      const task = {
+        "id": 4,
+        "todo": "grocery shopping",
+        "completed": false,
+        "user_id": 2
+      };
+
+      const dataBase = [{
+        ...task,
+        id: 4,
+      }];
+
+      const data = await fakeRequest(app)
+        .get('/api/todos')
+        .set('Authorization', token)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(dataBase);
     });
   });
 });
