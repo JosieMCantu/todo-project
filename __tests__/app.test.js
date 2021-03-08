@@ -62,7 +62,7 @@ describe('app routes', () => {
         "completed": true,
       };
 
-      const dataBase = [];
+      const dataBase = "";
 
       const data = await fakeRequest(app)
         .put('/api/todos/4')
@@ -79,7 +79,7 @@ describe('app routes', () => {
       const task = {
         "id": 4,
         "todo": "grocery shopping",
-        "completed": false,
+        "completed": true,
         "user_id": 2
       };
 
